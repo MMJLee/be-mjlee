@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Configuration;
 import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBeanBuilder;
 
+import dev.mjlee.bemjlee.Player.Player;
+import dev.mjlee.bemjlee.Player.PlayerRepository;
 import dev.mjlee.bemjlee.Project.Project;
 import dev.mjlee.bemjlee.Project.ProjectRepository;
 import dev.mjlee.bemjlee.Statement.Statement;
@@ -21,10 +23,12 @@ import dev.mjlee.bemjlee.Statement.StatementRepository;
 public class BeMjleeConfig {
 
     @Bean
-    CommandLineRunner commandLineRunner(ProjectRepository projectRepository, StatementRepository statementRepository) {
+    CommandLineRunner commandLineRunner(ProjectRepository projectRepository, StatementRepository statementRepository,
+            PlayerRepository playerRepository) {
         return args -> {
             loadStatements(statementRepository);
             loadProjects(projectRepository);
+            loadPlayers(playerRepository);
         };
     }
 
@@ -58,6 +62,23 @@ public class BeMjleeConfig {
                     .parse();
             for (Project project : beans) {
                 projectRepository.save(project);
+            }
+        }
+    }
+
+    private void loadPlayers(PlayerRepository playerRepository) throws IOException {
+        final URL urlPlayer = this.getClass().getClassLoader()
+                .getResource("PlayerDatabase.csv");
+        if (urlPlayer == null) {
+            System.out.println("resource not found");
+            throw new IOException("resource not found");
+        }
+        try (CSVReader reader = new CSVReader(new InputStreamReader(urlPlayer.openStream()))) {
+            List<Player> beans = new CsvToBeanBuilder<Player>(reader).withType(Player.class)
+                    .build()
+                    .parse();
+            for (Player player : beans) {
+                playerRepository.save(player);
             }
         }
     }

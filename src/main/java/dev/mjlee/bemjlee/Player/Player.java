@@ -1,4 +1,4 @@
-package dev.mjlee.bemjlee.User;
+package dev.mjlee.bemjlee.Player;
 
 import java.util.Objects;
 
@@ -13,11 +13,11 @@ import javax.persistence.Table;
 import com.opencsv.bean.CsvBindByName;
 
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "players")
+public class Player {
     @Id
-    @SequenceGenerator(name = "users_sequence", sequenceName = "users_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_sequence")
+    @SequenceGenerator(name = "players_sequence", sequenceName = "players_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "players_sequence")
     @Column(name = "id")
     private Long id;
     @Column(name = "name")
@@ -27,15 +27,15 @@ public class User {
     @CsvBindByName
     private Integer score;
 
-    public User() {
+    public Player() {
     }
 
-    public User(String name, Integer score) {
+    public Player(String name, Integer score) {
         this.name = name;
         this.score = score;
     }
 
-    public User(Long id, String name, Integer score) {
+    public Player(Long id, String name, Integer score) {
         this.id = id;
         this.name = name;
         this.score = score;
@@ -65,17 +65,17 @@ public class User {
         this.score = score;
     }
 
-    public User id(Long id) {
+    public Player id(Long id) {
         setId(id);
         return this;
     }
 
-    public User name(String name) {
+    public Player name(String name) {
         setName(name);
         return this;
     }
 
-    public User score(Integer score) {
+    public Player score(Integer score) {
         setScore(score);
         return this;
     }
@@ -84,11 +84,12 @@ public class User {
     public boolean equals(Object o) {
         if (o == this)
             return true;
-        if (!(o instanceof User)) {
+        if (!(o instanceof Player)) {
             return false;
         }
-        User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(score, user.score);
+        Player player = (Player) o;
+        return Objects.equals(id, player.id) && Objects.equals(name, player.name)
+                && Objects.equals(score, player.score);
     }
 
     @Override
