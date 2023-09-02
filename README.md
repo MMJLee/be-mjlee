@@ -1,5 +1,5 @@
 # be-mjlee (Backend for mjlee.dev)
-Hi, this is the backend for [my website](https://mjlee.dev). I wrote this in Java using Spring framework,
+Hi, this is the backend for ~~[my website](https://mjlee.dev)~~ (since been updated). I wrote this in Java using Spring framework,
 and used PostgreSQL for my database. They are hosted on AWS -- Elastic Beanstalk and RDS, respectively.
 This will be an ongoing project as I continue to add more features to my website.
 
